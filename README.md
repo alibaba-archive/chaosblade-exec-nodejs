@@ -1,3 +1,4 @@
-# Chaosblade-exec-node
+# chaosblade-exec-nodejs
+Chaos engineering experiment injection tool for nodejs applications.
 
-Chaosblade for node.js
+Coming Soon... :-)
