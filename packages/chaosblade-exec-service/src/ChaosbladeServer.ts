@@ -1,21 +1,26 @@
 import { ServiceOptions } from './interface';
 import * as KOA from 'koa';
+import { Server } from "http";
 import * as bodyParser from 'koa-bodyparser';
 import * as Router from 'koa-router';
-import { IPCHub } from './IPCHub';
+import { CreateHandler } from './handler/CreateHandler';
+import { DestroyHandler } from './handler/DestroyHandler';
+import { PrepareHandler } from './handler/PrepareHandler';
+import { StatusHandler } from './handler/StatusHandler';
+import { RequestHandler } from './handler/RequestHandler';
+import { Request } from 'chaosblade-exec-common';
 
 export class ChaosbladeServer {
   options: ServiceOptions;
   app: KOA;
-  server;
-  ipcHub: IPCHub;
+  server: Server;
   enabled: boolean = false;
+  handlers: Map<string, RequestHandler> = new Map();
 
   constructor(options?: ServiceOptions) {
     this.options = Object.assign({
       port: 12580,
-      host: '127.0.0.1',
-      ipc: false
+      host: '127.0.0.1'
     }, options);
 
     this.app = new KOA();
@@ -26,38 +31,30 @@ export class ChaosbladeServer {
   }
 
   async start() {
-    if (this.options.ipc) {
-      this.ipcHub = new IPCHub();
-      await this.ipcHub.start();
-    }
-
-    this.app.use(bodyParser());
+    this.use(bodyParser());
 
     const homeRouter = new Router();
     homeRouter.get('/', async (ctx) => {
       ctx.body = 'Chaosblade server start successful';
     });
 
-    this.app.use(homeRouter.routes());
+    this.use(homeRouter.routes());
 
+    const handlerRouter = new Router();
 
-    this.app.use(async (ctx, next) => {
-      ctx.ok = (data) => {
-        ctx.body = {
-          data,
-          timestamp: Date.now(),
-          success: true,
-          message: ''
-        };
-      };
-      ctx.fail = (message) => {
-        ctx.body = {
-          success: false,
-          timestamp: Date.now(),
-          message
-        };
-      };
-      await next();
+    if (this.prefix) {
+      handlerRouter.prefix(this.prefix);
+    }
+
+    this.registerHandler(handlerRouter, PrepareHandler);
+    this.registerHandler(handlerRouter, StatusHandler);
+    this.registerHandler(handlerRouter, CreateHandler);
+    this.registerHandler(handlerRouter, DestroyHandler);
+
+    this.use(handlerRouter.routes());
+
+    this.use(async (ctx) => {
+      ctx.status = 404;
     });
 
     return new Promise((resolve) => {
@@ -72,45 +69,42 @@ export class ChaosbladeServer {
     this.app.use(mid);
   }
 
-  router() {
-    const router = new Router();
+  registerHandler(router: Router, Handler: new() => RequestHandler) {
+    const handler = new Handler();
+    const name = handler.getHandlerName();
+    this.handlers.set(name, handler);
 
-    if (this.prefix) {
-      router.prefix(this.prefix);
-    }
+    router.get(`/${name}`, async (ctx: KOA.Context) => {
+      const request = this.parseContextToRequest(ctx);
+      const response = await handler.handle(request);
 
-    router.get('/prepare', async (ctx) => {
-      if (!this.enabled) {
-        this.enabled = true;
-        process.env.CHAOSBLADE_ENABLED = 'true';
-      }
+      ctx.body = response;
+    });
+  }
 
-      return ctx.ok({
-        code: ResponseCode.SERVER_ERROR.code,
-        success: false,
-        result: ResponseCode.SERVER_ERROR.msg,
-        error: error.message
-      });
+  private parseContextToRequest(ctx: KOA.Context): Request {
+    const { headers, query } = ctx;
+    const request = new Request();
+
+    Object.keys(headers).forEach((headerKey) => {
+      request.addHeader(headerKey, headers[headerKey]);
     });
 
-    router.get('/revoke', async (ctx) => {
+    Object.keys(query).forEach((queryKey) => {
+      request.addParam(queryKey, query[queryKey]);
     });
 
-    router.get('/status', async (ctx) => {});
-
-    router.get('/create', async (ctx) => {});
-
-    router.get('/destroy', async (ctx) => {});
-
-
-    this.server.use(router.routes());
-    this.server.use(router.allowedMethods());
+    return request;
   }
 
   async stop() {
     if(this.server) {
+      this.handlers.forEach((handler) => {
+        handler.unload();
+      });
       this.server.close();
       this.server = null;
+      this.handlers.clear();
     }
   }
 }

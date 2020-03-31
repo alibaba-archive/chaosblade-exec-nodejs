@@ -1,3 +1,4 @@
+import { mapToString } from '../../util/StringUtil';
 export class MatcherModel {
 
   private matchers: Map<string, string>;
@@ -17,4 +18,16 @@ export class MatcherModel {
   getMatchers(): Map<string, string> {
     return this.matchers;
   }
+
+  toJSON() {
+    const matcherStr = mapToString(this.matchers);
+    const res = [
+      'MatcherModel{',
+      `matchers=${matcherStr}`,
+      '}'
+    ];
+
+    return res.join('');
+  }
+
 }

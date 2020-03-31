@@ -12,6 +12,7 @@ import {
   RegisterResult,
   PreCreateInjectionModelHandler
 } from 'chaosblade-exec-common';
+import { ModelParser } from './ModelParser';
 
 export class CreateHandler implements RequestHandler {
   static logger = LoggerFactory.getLogger('CreateHandler');
@@ -29,7 +30,7 @@ export class CreateHandler implements RequestHandler {
     return 'create';
   }
 
-  handle(request: Request): Response {
+  async handle(request: Request): Promise<Response> {
     if (this.unloaded) {
       return Response.ofFailure(Code.ILLEGAL_STATE, 'the agent is uninstalling');
     }
@@ -66,6 +67,7 @@ export class CreateHandler implements RequestHandler {
 
     const model = ModelParser.parseRequest(target, request, actionSpec);
     const predicate = modelSpec.predicate(model);
+    model.setExpId(suid);
 
     if (!predicate.isSuccess()) {
       return Response.ofFailure(Code.ILLEGAL_PARAMETER, predicate.getErr());
@@ -74,7 +76,7 @@ export class CreateHandler implements RequestHandler {
     return this.handleInjection(suid, model, modelSpec);
   }
 
-  unload() {
+  async unload(): Promise<void> {
     this.unloaded = true;
   }
 
@@ -83,7 +85,7 @@ export class CreateHandler implements RequestHandler {
 
     if (result.isSuccess()) {
       try {
-        this.applyPreInjectionModelHandler(suid, modelSpec, model);
+        this.applyPreInjectionModelHandler(suid, <any>modelSpec, model);
       } catch (error) {
         this.statusManager.removeExp(suid);
         return Response.ofFailure(Code.SERVER_ERROR, error.message);

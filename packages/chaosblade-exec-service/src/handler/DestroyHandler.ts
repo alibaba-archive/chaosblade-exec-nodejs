@@ -27,7 +27,7 @@ export class DestroyHandler implements RequestHandler {
     return 'destroy';
   }
 
-  handle(request: Request): Response {
+  async handle(request: Request): Promise<Response> {
     const uid = request.getParam('suid');
     const target = request.getParam('target');
     const action = request.getParam('action');
@@ -64,6 +64,10 @@ export class DestroyHandler implements RequestHandler {
       }
     });
 
+    if (successMsg.length === 0 && errMsg.length > 0) {
+      success = false;
+    }
+
     if (success) {
       return Response.ofSuccess(successMsg.join(','));
     }
@@ -83,7 +87,7 @@ export class DestroyHandler implements RequestHandler {
     }
 
     try {
-      this.applyPreDestroyInjectionModelHandler(uid, modelSpec, model);
+      this.applyPreDestroyInjectionModelHandler(uid, <any>modelSpec, model);
     } catch (error) {
       return Response.ofFailure(Code.SERVER_ERROR, error.message);
     }
@@ -91,7 +95,7 @@ export class DestroyHandler implements RequestHandler {
     return Response.ofSuccess('success');
   }
 
-  unload() {
+  async unload(): Promise<void> {
     const uids = this.statusManager.getAllUids();
 
     uids.forEach((uid) => {

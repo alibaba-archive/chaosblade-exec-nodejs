@@ -8,7 +8,7 @@ export class ModelUtil {
       action = model.getActionName();
     }
 
-    const target = model.getTarget;
+    const target = model.getTarget();
     const identifier = [
       target,
       action

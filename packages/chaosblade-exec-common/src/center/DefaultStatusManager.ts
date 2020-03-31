@@ -42,7 +42,7 @@ export class DefaultStatusManager implements StatusManager {
       metricMap.set(identifier, metric);
     } else {
       this.logger.warn(`${model.toString()} exists`);
-      return RegisterResult.fail(metric.model);
+      return RegisterResult.fail(metric.getModel());
     }
 
     this.experiments.set(suid, identifier);
@@ -70,7 +70,7 @@ export class DefaultStatusManager implements StatusManager {
 
     if (metric) {
       metricMap.delete(identifier);
-      return metric.model;
+      return metric.getModel();
     }
 
     return null;
@@ -103,13 +103,13 @@ export class DefaultStatusManager implements StatusManager {
       return uids;
     }
 
-    const identifiers = [];
+    const identifiers = new Set();
     metricMap.forEach((value, key) => {
-      identifiers.push(key);
+      identifiers.add(key);
     });
 
     this.experiments.forEach((value, key) => {
-      if (identifiers.indexOf(value) > -1) {
+      if (identifiers.has(value)) {
         uids.add(key);
       }
     });
@@ -156,7 +156,7 @@ export class DefaultStatusManager implements StatusManager {
     const statusMetrics = this.getExpByTarget(targetName);
 
     for (const statusMetric of statusMetrics) {
-      if (actionName === statusMetric.model.getActionName()) {
+      if (actionName === statusMetric.getModel().getActionName()) {
         return true;
       }
     }
@@ -187,17 +187,7 @@ export class DefaultStatusManager implements StatusManager {
   }
 
   getAllUids(): Set<string> {
-    const keyIter = this.experiments.keys();
-    const result: Set<string> = new Set();
-
-    let cur = keyIter.next();
-
-    do {
-      result.add(cur.value);
-      cur = keyIter.next();
-    } while(!cur.done);
-
-    return result;
+    return new Set([ ...this.experiments.keys() ]);
   }
 
   isClosed(): boolean {

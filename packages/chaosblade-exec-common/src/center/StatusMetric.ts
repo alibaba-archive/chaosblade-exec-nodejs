@@ -1,8 +1,8 @@
 import { Model } from '../model/Model';
 
 export class StatusMetric {
-  model: Model;
-  hitCounts: number;
+  private model: Model;
+  private hitCounts: number;
 
   constructor(model: Model) {
     this.model = model;
@@ -17,5 +17,13 @@ export class StatusMetric {
     if (this.hitCounts > 0 && incrHitCountWhenMatched) {
       this.hitCounts --;
     }
+  }
+
+  getCount(): number {
+    return this.hitCounts;
+  }
+
+  getModel(): Model {
+    return this.model;
   }
 }

@@ -61,8 +61,14 @@ export class Response {
     this.code = code;
   }
 
-  toString() {
-    return JSON.stringify(this);
+  toJSON() {
+    return {
+      code: this.code,
+      success: this.success,
+      result: this.result,
+      error: this.error,
+      requestId: this.requestId
+    };
   }
 
   equals(o: any): boolean {

@@ -7,7 +7,7 @@ import { MatcherSpec } from './matcher/MatcherSpec';
 import { AgentPrepareSpec } from './prepare/AgentPrepareSpec';
 
 export abstract class BaseModelSpec implements ModelSpec {
-  private static logger = LoggerFactory.getLogger();
+  private static logger = LoggerFactory.getLogger('BaseModelSpec');
   private actionSpecs: Map<string, ActionSpec> = new Map();
 
   abstract getTarget(): string;
@@ -59,18 +59,18 @@ export abstract class BaseModelSpec implements ModelSpec {
         continue;
       }
 
-      let result: PredicateResult = actionSpec.predicate(model.action);
+      let result: PredicateResult = actionSpec.predicate(model.getAction());
 
-      if (!result.success) {
+      if (!result.isSuccess()) {
         BaseModelSpec.logger.error(`this model action predicate failed. target: ${this.getTarget()}, action: ${actionSpec.getName()}`);
 
-        return PredicateResult.fail(result.err);
+        return PredicateResult.fail(result.getErr());
       }
 
       result = this.preMatcherPredicate(model);
 
-      if (!result.success) {
-        return PredicateResult.fail(result.err);
+      if (!result.isSuccess()) {
+        return PredicateResult.fail(result.getErr());
       }
 
       const matcherSpecs = actionSpec.getMatcherSpecs();
@@ -81,10 +81,10 @@ export abstract class BaseModelSpec implements ModelSpec {
 
       for (const item of matcherSpecs) {
         const matcherSpec = item[1];
-        result = matcherSpec.predicate(model.matcher);
+        result = matcherSpec.predicate(model.getMatcher());
 
-        if (!result.success) {
-          return PredicateResult.fail(result.err);
+        if (!result.isSuccess()) {
+          return PredicateResult.fail(result.getErr());
         }
       }
     }

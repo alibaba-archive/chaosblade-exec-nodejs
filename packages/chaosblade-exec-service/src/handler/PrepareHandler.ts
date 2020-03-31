@@ -10,7 +10,7 @@ export class PrepareHandler implements RequestHandler {
     return 'prepare';
   }
 
-  handle(): Response {
+  async handle(): Promise<Response> {
     if (!this.unloaded) {
       process.env.CHAOSBLADE_ENABLED = 'true';
     }
@@ -18,7 +18,8 @@ export class PrepareHandler implements RequestHandler {
     return Response.ofSuccess('success');
   }
 
-  unload() {
+  async unload(): Promise<void> {
+    process.env.CHAOSBLADE_ENABLED = '';
     this.unloaded = true;
   }
 }

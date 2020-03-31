@@ -1,3 +1,5 @@
+import { mapToString } from '../../util/StringUtil';
+
 export class ActionModel {
   private name: string;
   private flags: Map<string, string> = new Map();
@@ -20,5 +22,19 @@ export class ActionModel {
 
   getFlag(key: string): string {
     return this.flags.get(key);
+  }
+
+  toJSON(): string {
+    const flagStr = mapToString(this.flags);
+
+    const res = [
+      'ActionModel{',
+      `name='${this.name}'`,
+      ', flags=',
+      flagStr,
+      '}'
+    ];
+
+    return res.join('');
   }
 }
