@@ -1,0 +1,65 @@
+{
+  "name": "chaosblade-exec-nodejs",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@types/node": "^13.9.5",
+    "chai": "^4.2.0",
+    "lerna": "^2.11.0",
+    "mocha": "^7.0.1",
+    "nyc": "^15.0.0",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.0.0",
+    "typedoc": "^0.16.9",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "bootstrap": "rm -f ./packages/.DS*; ./node_modules/.bin/lerna bootstrap",
+    "build": "sh scripts/build.sh",
+    "test": "./node_modules/.bin/lerna run test --concurrency=1",
+    "cov": "./node_modules/.bin/nyc ./node_modules/.bin/lerna run cov --concurrency=1",
+    "ci": "npm run build && npm run cov",
+    "purge": "npm run clean && rm -rf node_modules",
+    "clean": "./node_modules/.bin/lerna clean --yes; rm -rf ./packages/**/package-lock.json",
+    "reset": "npm run purge && npm i && npm run ci",
+    "publish": "rm -f ./packages/.DS*; sh scripts/publish.sh",
+    "beta": "sh scripts/publish.sh --npm-tag beta --force-publish=*",
+    "canary": "sh scripts/publish.sh --canary",
+    "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
+  },
+  "keywords": [
+    "chaosblade",
+    "fault inject",
+    "node.js",
+    "node"
+  ],
+  "homepage": "https://github.com/chaosblade-io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaosblade-io/chaosblade-exec-nodejs.git"
+  },
+  "engines": {
+    "node": ">= 10.16.3"
+  },
+  "license": "MIT",
+  "nyc": {
+    "include": [
+      "packages/**/src/*.ts",
+      "packages/**/src/**/*.ts"
+    ],
+    "exclude": [
+      "**/typings",
+      "**/*.d.ts",
+      "**/dist",
+      "**/src/index.ts",
+      "**/src/interface.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": false
+  }
+}

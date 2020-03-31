@@ -1,0 +1,15 @@
+{
+  "name": "chaosblade-exec-common",
+  "version": "1.0.0",
+  "main": "dist/index",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run lint && rm -rf ./dist && ../../node_modules/.bin/tsc",
+    "lint": "../../node_modules/.bin/tslint --format prose -c ../../tslint.json src/**/*.ts test/**/*.ts",
+    "test": "npm run lint && NODE_ENV=unittest ../../node_modules/.bin/mocha --trace-warnings",
+    "cov": "../../node_modules/.bin/nyc ../../node_modules/.bin/mocha",
+    "ci": "npm run test"
+
+  },
+  "dependencies": {}
+}
