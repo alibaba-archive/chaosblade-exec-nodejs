@@ -1,4 +1,4 @@
-export * from './center/ManagerFactory';
+export { ManagerFactory } from './center/ManagerFactory';
 export { Request } from './transport/Request';
 export { Response, Code } from './transport/Response';
 export { LoggerFactory } from './util/LoggerFactory';
