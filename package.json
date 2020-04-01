@@ -68,7 +68,8 @@
     ],
     "reporter": [
       "json",
-      "html"
+      "html",
+      "text-lcov"
     ],
     "all": true
   }
