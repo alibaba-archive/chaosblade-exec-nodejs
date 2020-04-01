@@ -17,3 +17,4 @@ export { PredicateResult } from './aop/PredicateResult';
 export { MatcherSpec } from './model/matcher/MatcherSpec';
 export { BasePredicateMatcherSpec } from './model/matcher/BasePredicateMatcherSpec';
 export { BaseActionSpec } from './model/action/BaseActionSpec';
+export { MatcherModel } from './model/matcher/MatcherModel';

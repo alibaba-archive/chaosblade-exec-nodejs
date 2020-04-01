@@ -4,7 +4,7 @@ import { Request,  } from 'chaosblade-exec-common';
 import { NoFlagActionSpec } from '../fixtures/NoFlagActionSpec';
 
 describe('ModelParser', () => {
-  it('should work when action flags noexist', async () => {
+  it('should work when action flags nonexist', async () => {
     const request = new Request();
     const actionSpec = new NoFlagActionSpec(null);
     const model = ModelParser.parseRequest('test', request, actionSpec);

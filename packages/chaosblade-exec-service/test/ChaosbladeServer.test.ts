@@ -106,7 +106,7 @@ describe('ChaosbladeServer', () => {
     });
 
     it('should /create fail because target not support', async () => {
-      const res = await request(chaosServer.server).get('/create?suid=4&target=noexist&action=delay&time=3000').expect(200);
+      const res = await request(chaosServer.server).get('/create?suid=4&target=nonexist&action=delay&time=3000').expect(200);
 
       expect(res.body).to.deep.equal({
         code: 405,
