@@ -67,9 +67,8 @@
       ".ts"
     ],
     "reporter": [
-      "json",
-      "html",
-      "text-lcov"
+      "text",
+      "lcov"
     ],
     "all": true
   }
