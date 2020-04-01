@@ -11,7 +11,7 @@ export class Injector {
     const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
 
     for (const statusMetric of statusMetrics) {
-      const model = statusMetric.model;
+      const model = statusMetric.getModel();
       enhancerModel.uid = model.getExpId();
 
       if (!this.compare(model, enhancerModel)) {
@@ -41,7 +41,7 @@ export class Injector {
     const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
 
     for (const statusMetric of statusMetrics) {
-      const model = statusMetric.model;
+      const model = statusMetric.getModel();
       enhancerModel.uid = model.getExpId();
 
       if (!this.compare(model, enhancerModel)) {

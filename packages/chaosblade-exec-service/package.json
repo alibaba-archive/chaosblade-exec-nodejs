@@ -33,5 +33,29 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/chaosblade-io/chaosblade-exec-nodejs.git"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "exclude": [
+      "typings",
+      "*.d.ts",
+      "dist",
+      "src/index.ts",
+      "src/interface.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "all": true
   }
 }
