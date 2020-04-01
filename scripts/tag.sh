@@ -15,7 +15,7 @@ do
       cd $pkg
       NAME=$(node -pe "require('./package.json').name")
       VERSION=$(node -pe "require('./package.json').version")
-      SHH="tnpm dist-tag add ${NAME}@${VERSION} $TAG"
+      SHH="npm dist-tag add ${NAME}@${VERSION} $TAG"
       echo $SHH
       $SHH
     fi

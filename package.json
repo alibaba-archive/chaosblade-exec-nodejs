@@ -5,29 +5,29 @@
     "@types/chai": "^4.2.11",
     "@types/koa": "^2.11.3",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.9.5",
+    "@types/node": "^13.9.8",
     "@types/supertest": "^2.0.8",
     "chai": "^4.2.0",
-    "lerna": "^2.11.0",
-    "mocha": "^7.0.1",
+    "lerna": "^3.20.2",
+    "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "supertest": "^4.0.2",
-    "ts-node": "^8.6.2",
-    "tslint": "^6.0.0",
-    "typedoc": "^0.16.9",
-    "typescript": "^3.7.5"
+    "ts-node": "^8.8.1",
+    "tslint": "^6.1.0",
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
   },
   "scripts": {
-    "bootstrap": "rm -f ./packages/.DS*; ./node_modules/.bin/lerna bootstrap",
+    "bootstrap": "rm -f ./packages/.DS* && lerna bootstrap",
     "build": "sh scripts/build.sh",
-    "test": "./node_modules/.bin/lerna run test --concurrency=1",
-    "cov": "./node_modules/.bin/nyc ./node_modules/.bin/lerna run cov --concurrency=1",
+    "test": "lerna run test --concurrency=1",
+    "cov": "lerna run cov --concurrency=1",
     "ci": "npm run build && npm run cov",
     "purge": "npm run clean && rm -rf node_modules",
-    "clean": "./node_modules/.bin/lerna clean --yes; rm -rf ./packages/**/package-lock.json",
+    "clean": "lerna clean --yes && rm -rf ./packages/**/package-lock.json",
     "reset": "npm run purge && npm i && npm run ci",
-    "publish": "rm -f ./packages/.DS*; sh scripts/publish.sh",
+    "publish": "rm -f ./packages/.DS* && sh scripts/publish.sh",
     "beta": "sh scripts/publish.sh --npm-tag beta --force-publish=*",
     "canary": "sh scripts/publish.sh --canary",
     "authors": "git log --format='%aN <%aE>' | sort -u > AUTHORS"
@@ -35,6 +35,7 @@
   "keywords": [
     "chaosblade",
     "fault inject",
+    "chaos engineering",
     "node.js",
     "node"
   ],
@@ -44,13 +45,16 @@
     "url": "https://github.com/chaosblade-io/chaosblade-exec-nodejs.git"
   },
   "engines": {
-    "node": ">= 10.16.3"
+    "node": ">= 10.0.0"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "nyc": {
     "include": [
       "packages/**/src/*.ts",
       "packages/**/src/**/*.ts"
+    ],
+    "require": [
+      "ts-node/register"
     ],
     "exclude": [
       "**/typings",
@@ -66,6 +70,6 @@
       "json",
       "html"
     ],
-    "all": false
+    "all": true
   }
 }

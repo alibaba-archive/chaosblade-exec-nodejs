@@ -1,7 +1,24 @@
 {
-  "lerna": "2.11.0",
   "packages": [
     "packages/*"
   ],
+  "command": {
+    "bootstrap": {
+      "hoist": true,
+      "noCi": true,
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    },
+    "publish": {
+      "ignoreChanges": [
+        "*.md"
+      ]
+    },
+    "version": {
+      "conventionalCommits": true
+    }
+  },
+  "npmClient": "npm",
   "version": "0.0.0"
 }

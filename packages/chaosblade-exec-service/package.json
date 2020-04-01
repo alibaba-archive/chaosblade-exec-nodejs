@@ -1,17 +1,37 @@
 {
   "name": "chaosblade-exec-service",
+  "description": "chaosblade http service",
   "version": "1.0.0",
+  "main": "dist/index",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npm run lint && rm -rf ./dist && ../../node_modules/.bin/tsc",
-    "lint": "../../node_modules/.bin/tslint --format prose -c ../../tslint.json src/**/*.ts test/**/*.ts",
+    "lint": "../../node_modules/.bin/tslint --format prose -c ../../tslint.json --fix src/**/*.ts test/**/*.ts",
     "test": "npm run lint && NODE_ENV=unittest ../../node_modules/.bin/mocha --trace-warnings",
     "cov": "../../node_modules/.bin/nyc ../../node_modules/.bin/mocha",
     "ci": "npm run test"
   },
+  "keywords": [
+    "chaosblade",
+    "chaosblade service"
+  ],
   "dependencies": {
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",
     "chaosblade-exec-common": "^1.0.0"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "author": "Mario Du <dujiakun@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaosblade-io/chaosblade-exec-nodejs.git"
   }
 }
