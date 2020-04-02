@@ -1,7 +1,7 @@
 {
   "name": "chaosblade-exec-common",
   "description": "chaosblade exec core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -19,7 +19,6 @@
     "dist",
     "src"
   ],
-  "dependencies": {},
   "license": "Apache-2.0",
   "engines": {
     "node": ">= 10.0.0"
