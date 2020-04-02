@@ -45,7 +45,7 @@
     "url": "https://github.com/chaosblade-io/chaosblade-exec-nodejs.git"
   },
   "engines": {
-    "node": ">= 10.0.0"
+    "node": ">= 10.16.0"
   },
   "license": "Apache-2.0"
 }
