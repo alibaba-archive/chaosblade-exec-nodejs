@@ -1,7 +1,7 @@
 {
   "name": "chaosblade-exec-service",
   "description": "chaosblade http service",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
   "scripts": {
