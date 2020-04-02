@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { ModelUtil } from '../../src/util/ModelUtil';
 import { Model, MatcherModel } from '../../src';
 
-describe('ModelUtil', () => {
+describe('util/ModelUtil', () => {
 
   describe('getIdentifier', () => {
     it('should getIdentifier work', () => {

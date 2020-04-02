@@ -3,7 +3,7 @@ import { LoggerFactory } from '../../src/';
 import * as sinon from 'sinon';
 import { MockLogger } from '../fixtures/MockLogger';
 
-describe('LoggerFactory', () => {
+describe('util/LoggerFactory', () => {
 
   it('should get default logger', () => {
     const logger = LoggerFactory.getLogger('test');

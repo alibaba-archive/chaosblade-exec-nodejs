@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { mapToString } from '../../src/util/StringUtil';
 
-describe('StringUtil', () => {
+describe('util/StringUtil', () => {
 
   it('mapToString should work', () => {
     const map = new Map([
