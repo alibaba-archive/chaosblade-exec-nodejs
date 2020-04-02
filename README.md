@@ -6,4 +6,5 @@
 
 Chaos engineering experiment injection tool for nodejs applications.
 
-Coming Soon... :-)
+## chaosblade-exec-service
+A http service that handles web console or cli communication compatible with the chaosblade specification.
