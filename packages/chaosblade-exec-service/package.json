@@ -19,7 +19,7 @@
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",
-    "chaosblade-exec-common": "^1.0.0"
+    "chaosblade-exec-common": "^0.0.0"
   },
   "files": [
     "dist",
