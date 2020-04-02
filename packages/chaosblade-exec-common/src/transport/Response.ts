@@ -70,17 +70,6 @@ export class Response {
       requestId: this.requestId
     };
   }
-
-  equals(o: any): boolean {
-    if (this === o) { return true; }
-    if (!(o instanceof Response)) { return false; }
-
-    if (this.code !== o.code) { return false; }
-    if (this.success !== o.success) { return false; }
-    if (this.requestId != null ? !(this.requestId === o.requestId) : o.requestId !== null) { return false; }
-    if (this.result != null ? !(this.result === o.result) : o.result !== null) { return false; }
-    return this.error != null ? (this.error === o.error) : o.error == null;
-}
 }
 
 export class Code {

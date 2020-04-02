@@ -28,6 +28,6 @@ export class ModelUtil {
   }
 
   static getTarget(identifier: string): string {
-    return identifier.split(this.SEPARATOR)[0];
+    return (identifier || '').split(this.SEPARATOR)[0];
   }
 }

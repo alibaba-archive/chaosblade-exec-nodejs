@@ -1,4 +1,4 @@
-export * from './center/ManagerFactory';
+export { ManagerFactory } from './center/ManagerFactory';
 export { Request } from './transport/Request';
 export { Response, Code } from './transport/Response';
 export { LoggerFactory } from './util/LoggerFactory';
@@ -17,3 +17,4 @@ export { PredicateResult } from './aop/PredicateResult';
 export { MatcherSpec } from './model/matcher/MatcherSpec';
 export { BasePredicateMatcherSpec } from './model/matcher/BasePredicateMatcherSpec';
 export { BaseActionSpec } from './model/action/BaseActionSpec';
+export { MatcherModel } from './model/matcher/MatcherModel';
