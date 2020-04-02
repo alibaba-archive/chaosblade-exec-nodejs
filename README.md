@@ -41,6 +41,26 @@ interface ServiceOptions {
   prefix?: string; // request path prefix
 }
 ```
+
+## chaosblade-exec-common
+Chaosblade Node.js executor core logic, including fault injection description and common fault injection implementation, can customize the required fault types through extension.
+
+### Installation
+
+```
+$ npm install chaosblade-exec-common --save
+```
+
+Node.js >= 10.16.0 required.
+
+## chaosblade-exec-bootstrap
+Start and load chaosblade service and fault module
+Please look forward...
+
+## chaosblade-exec-plugin
+Implementation of fault injection for common middleware.
+Please look forward...
+
 ## Contributors
 
 Please let us know how can we help. Do check out issues for bug reports or suggestions first.
