@@ -19,7 +19,6 @@ describe('util/StringUtil', () => {
     const map = new Map();
 
     const str = mapToString(map);
-
     expect(str).to.equal('{}');
   });
 });

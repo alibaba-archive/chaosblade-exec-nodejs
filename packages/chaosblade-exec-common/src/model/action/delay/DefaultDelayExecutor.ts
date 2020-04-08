@@ -19,7 +19,7 @@ export class DefaultDelayExecutor implements DelayExecutor {
     let offset = 0;
     const offsetTime = enhancerModel.getActionFlag(this.timeOffsetFlagSpec.getName());
 
-    if (!offsetTime) {
+    if (offsetTime) {
       offset = parseInt(offsetTime, 10);
 
       if (isNaN(offset)) {
@@ -27,7 +27,7 @@ export class DefaultDelayExecutor implements DelayExecutor {
       }
     }
 
-    const timeoutExecutor = enhancerModel.timeoutExecutor;
+    const timeoutExecutor = enhancerModel.getTimeoutExecutor();
 
     if (timeoutExecutor) {
         const timeoutInMillis = timeoutExecutor.getTimeoutInMillis();

@@ -14,7 +14,7 @@ export abstract class BasePredicateMatcherSpec implements MatcherSpec {
 
     if (!value) {
       if (this.required()) {
-        return PredicateResult.fail(`less necessary ${this.getName()}  value`);
+        return PredicateResult.fail(`less necessary ${this.getName()} value`);
       }
     }
 

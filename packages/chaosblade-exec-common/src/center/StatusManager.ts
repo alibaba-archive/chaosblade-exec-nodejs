@@ -33,7 +33,7 @@ export interface StatusManager extends ManagerService {
    *
    * @return
    */
-  listExps(): Map<string, StatusMetric[]>;
+  listExps(): Map<string, Set<StatusMetric>>;
 
   /**
    * List experiments by the exp target
@@ -41,7 +41,7 @@ export interface StatusManager extends ManagerService {
    * @param targetName
    * @return
    */
-  getExpByTarget(targetName: string): StatusMetric[];
+  getExpByTarget(targetName: string): Set<StatusMetric>;
 
   /**
    * Assert the target experiment exist or not

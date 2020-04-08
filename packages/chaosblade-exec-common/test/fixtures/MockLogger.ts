@@ -8,4 +8,8 @@ export class MockLogger {
   info(msg) {
     console.log(`[${this.topic}] ${msg}`);
   }
+
+  warn(msg) {
+    console.warn(`[${this.topic}] ${msg}`);
+  }
 }

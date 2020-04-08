@@ -1,6 +1,6 @@
 {
-  "name": "chaosblade-exec-common",
-  "description": "chaosblade exec core",
+  "name": "chaosblade-exec-bootstrap",
+  "description": "load chaosblade all module",
   "version": "0.1.0",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
@@ -13,8 +13,11 @@
   },
   "keywords": [
     "chaosblade",
-    "chaosblade common"
+    "chaosblade bootstrap"
   ],
+  "dependencies": {
+    "chaosblade-exec-common": "0.1.0"
+  },
   "files": [
     "dist",
     "src"
@@ -51,8 +54,5 @@
       "lcov"
     ],
     "all": true
-  },
-  "devDependencies": {
-    "@types/sinon": "^9.0.0"
   }
 }

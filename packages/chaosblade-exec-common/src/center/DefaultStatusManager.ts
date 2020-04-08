@@ -76,19 +76,19 @@ export class DefaultStatusManager implements StatusManager {
     return null;
   }
 
-  listExps(): Map<string, StatusMetric[]> {
-    const map: Map<string, StatusMetric[]> = new Map();
+  listExps(): Map<string, Set<StatusMetric>> {
+    const map: Map<string, Set<StatusMetric>> = new Map();
 
     this.models.forEach((metricMap, targetName) => {
       let statusMetrics = map.get(targetName);
 
       if (!statusMetrics) {
-        statusMetrics = [];
+        statusMetrics = new Set();
         map.set(targetName, statusMetrics);
       }
 
       metricMap.forEach((statusMetric) => {
-        statusMetrics.push(statusMetric);
+        statusMetrics.add(statusMetric);
       });
     });
 
@@ -117,17 +117,16 @@ export class DefaultStatusManager implements StatusManager {
     return uids;
   }
 
-  getExpByTarget(targetName: string): StatusMetric[] {
+  getExpByTarget(targetName: string): Set<StatusMetric> {
     const metricMap = this.models.get(targetName);
+    const statusMetrics = new Set<StatusMetric>();
 
     if (!metricMap) {
-      return [];
+      return statusMetrics;
     }
 
-    const statusMetrics = [];
-
     metricMap.forEach((statusMetric) => {
-      statusMetrics.push(statusMetric);
+      statusMetrics.add(statusMetric);
     });
 
     return statusMetrics;

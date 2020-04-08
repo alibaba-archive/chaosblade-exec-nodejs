@@ -7,12 +7,12 @@ export class Injector {
   static logger = LoggerFactory.getLogger('Injector');
 
   static inject(enhancerModel: EnhancerModel): void {
-    const target = enhancerModel.target;
+    const target = enhancerModel.getTarget();
     const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
 
     for (const statusMetric of statusMetrics) {
       const model = statusMetric.getModel();
-      enhancerModel.uid = model.getExpId();
+      enhancerModel.setUid(model.getExpId());
 
       if (!this.compare(model, enhancerModel)) {
         continue;
@@ -37,12 +37,12 @@ export class Injector {
   }
 
   static async injectAsync(enhancerModel: EnhancerModel): Promise<void> {
-    const target = enhancerModel.target;
+    const target = enhancerModel.getTarget();
     const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
 
     for (const statusMetric of statusMetrics) {
       const model = statusMetric.getModel();
-      enhancerModel.uid = model.getExpId();
+      enhancerModel.setUid(model.getExpId());
 
       if (!this.compare(model, enhancerModel)) {
         continue;
@@ -73,7 +73,7 @@ export class Injector {
       return true;
     }
 
-    const enhancerMatcherModel = enhancerModel.matcherModel;
+    const enhancerMatcherModel = enhancerModel.getMatcherModel();
 
     if (!enhancerMatcherModel) {
       return false;

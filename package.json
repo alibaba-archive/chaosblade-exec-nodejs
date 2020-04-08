@@ -22,7 +22,7 @@
     "bootstrap": "rm -f ./packages/.DS* && lerna bootstrap",
     "build": "sh scripts/build.sh",
     "test": "lerna run test --concurrency=1",
-    "cov": "lerna run cov --concurrency=1",
+    "cov": "lerna run cov",
     "ci": "npm run build && npm run cov",
     "purge": "npm run clean && rm -rf node_modules",
     "clean": "lerna clean --yes && rm -rf ./packages/**/package-lock.json",
