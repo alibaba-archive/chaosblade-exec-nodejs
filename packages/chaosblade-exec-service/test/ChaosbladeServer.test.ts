@@ -272,7 +272,7 @@ describe('ChaosbladeServer', () => {
     it('should /destroy work when destroy with target and action has some error', async () => {
       // unloaded in above test
       const handler = chaosServer.handlers.get('create');
-      const stub = sinon.stub(handler, 'unloaded').value(false);
+      const stub = sinon.stub(<any>handler, 'unloaded').value(false);
 
       await request(chaosServer.server).get('/create?suid=15&target=demo&action=delay&time=3000&name=demo-destory-15').expect(200);
       await request(chaosServer.server).get('/create?suid=16&target=demo&action=delay&time=3000&name=demo-destory-16').expect(200);
@@ -285,7 +285,7 @@ describe('ChaosbladeServer', () => {
     it('should /destroy failed when destroy with target and action all error', async () => {
       // unloaded in above test
       const handler = chaosServer.handlers.get('create');
-      const stub = sinon.stub(handler, 'unloaded').value(false);
+      const stub = sinon.stub(<any>handler, 'unloaded').value(false);
       await request(chaosServer.server).get('/create?suid=17&target=demo&action=delay&time=3000&name=demo-destory-17').expect(200);
       const res = await request(chaosServer.server).get('/destroy?target=demo&action=delay').expect(200);
 
@@ -301,7 +301,7 @@ describe('ChaosbladeServer', () => {
     it('should /destroy work when not find model spec by suid', async () => {
       // unloaded in above test
       const handler = chaosServer.handlers.get('create');
-      const stubHandler = sinon.stub(handler, 'unloaded').value(false);
+      const stubHandler = sinon.stub(<any>handler, 'unloaded').value(false);
       await request(chaosServer.server).get('/create?suid=18&target=demo&action=delay&time=3000&name=demo-destory-18').expect(200);
       const stub = sinon.stub(modelSpecManager, 'getModelSpec').returns(null);
 
@@ -314,7 +314,7 @@ describe('ChaosbladeServer', () => {
     it('should destroy all experiment when unload', async () => {
       // unloaded in above test
       const handler = chaosServer.handlers.get('create');
-      const stubHandler = sinon.stub(handler, 'unloaded').value(false);
+      const stubHandler = sinon.stub(<any>handler, 'unloaded').value(false);
       await request(chaosServer.server).get('/create?suid=19&target=demo&action=delay&time=3000&name=demo-destory-19').expect(200);
       await request(chaosServer.server).get('/create?suid=20&target=demo&action=delay&time=3000&name=demo-destory-20').expect(200);
 
