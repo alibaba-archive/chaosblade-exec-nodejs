@@ -125,7 +125,7 @@ export class EnhancerModel {
   }
 
   addContextValue(key: string, value: any): void {
-    if (!key) {
+    if (key) {
       this.invokeContext.set(key, value);
     }
   }

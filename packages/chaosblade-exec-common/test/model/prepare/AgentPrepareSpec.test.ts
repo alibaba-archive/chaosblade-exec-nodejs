@@ -1,26 +1,30 @@
 import { expect } from 'chai';
 import { AgentPrepareSpec } from '../../../src/model/prepare/AgentPrepareSpec';
 
-describe('model/prepare/AgentPrepareSpec', () => {
+describe('src/model/prepare/AgentPrepareSpec', () => {
+  let spec: AgentPrepareSpec = null;
 
-  it('should new AgentPrepareSpec work', () => {
-    let spec: AgentPrepareSpec;
+  before(() => {
+    spec = new AgentPrepareSpec();
+  });
 
-    expect(() => {
-      spec = new AgentPrepareSpec();
-    }).not.to.throw();
-
+  it('should getType work', () => {
     expect(spec.getType()).to.equal('nodejs');
+  });
+
+  it('should required work', () => {
     expect(spec.required()).to.equal(true);
+  });
 
-    const flag = spec.getFlags();
-    expect(flag.length).to.equal(1);
+  it('should getFlags work', () => {
+    const flags = spec.getFlags();
 
-    const portFlag = flag[0];
+    expect(flags.length).to.equal(1);
 
-    expect(portFlag.getName()).to.equal('port');
-    expect(portFlag.getDesc()).to.equal('node.js chaosblade agent port');
-    expect(portFlag.noArgs()).to.equal(false);
-    expect(portFlag.required()).to.equal(true);
+    const flag = flags[0];
+    expect(flag.getName()).to.equal('port');
+    expect(flag.getDesc()).to.equal('node.js chaosblade agent port');
+    expect(flag.noArgs()).to.equal(false);
+    expect(flag.required()).to.equal(true);
   });
 });

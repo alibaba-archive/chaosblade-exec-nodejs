@@ -6,7 +6,7 @@ import { LoggerFactory } from '../util/LoggerFactory';
 export class Injector {
   static logger = LoggerFactory.getLogger('Injector');
 
-  static inject(enhancerModel: EnhancerModel): void {
+  static async inject(enhancerModel: EnhancerModel): Promise<void> {
     const target = enhancerModel.getTarget();
     const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
 
@@ -23,36 +23,7 @@ export class Injector {
 
         const modelSpec = ManagerFactory.getModelSpecManager().getModelSpec(target);
         const actionSpec = modelSpec.getActionSpec(model.getActionName());
-        actionSpec.getActionExecutor().run(enhancerModel);
-      } catch (error) {
-        if (error.chaosblade) {
-          throw error;
-        } else {
-          this.logger.warn('inject failed. ', error);
-        }
-      }
 
-      break;
-    }
-  }
-
-  static async injectAsync(enhancerModel: EnhancerModel): Promise<void> {
-    const target = enhancerModel.getTarget();
-    const statusMetrics = ManagerFactory.getStatusManager().getExpByTarget(target);
-
-    for (const statusMetric of statusMetrics) {
-      const model = statusMetric.getModel();
-      enhancerModel.setUid(model.getExpId());
-
-      if (!this.compare(model, enhancerModel)) {
-        continue;
-      }
-
-      try {
-        enhancerModel.merge(model);
-
-        const modelSpec = ManagerFactory.getModelSpecManager().getModelSpec(target);
-        const actionSpec = modelSpec.getActionSpec(model.getActionName());
         await actionSpec.getActionExecutor().run(enhancerModel);
       } catch (error) {
         if (error.chaosblade) {
